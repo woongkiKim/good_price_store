@@ -7,7 +7,7 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # Streamlit 설정
-st.set_page_config(page_title="구해줘 공장 🗺", layout="wide")
+st.set_page_config(page_title="착한가격업소 지도 🗺", layout="wide")
 
 # CSV 데이터 로드
 store = pd.read_csv('https://blog.kakaocdn.net/dn/ooQp5/btsIn79vdrW/NU7TR5Qybu8Oqk9sZL0ick/good_price.csv?attach=1&knm=tfile.csv')
