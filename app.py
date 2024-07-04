@@ -32,6 +32,12 @@ if selected_business_types:
 if selected_cities:
     filtered_store = filtered_store[filtered_store['시단위'].isin(selected_cities)]
 
+## 헤드라인
+st.title('🗺 착한가격업소 지도')
+st.subheader('🍜 정부에서 지정한 착한가격업소를 방문해보세요!')
+st.write(f'좌측에 지역을 선택하시면 해당 지역의 착한가격업소를 지도에 표시해드립니다.')
+st.write(f'모바일의 경우, 좌측 상단의 ">" 버튼을 눌러주세요.')
+
 # 지도 중심 좌표 설정
 center_lat, center_lng = 37.1, 128.8
 m = folium.Map(location=[center_lat, center_lng], zoom_start=8, width='100%', height='100%')
@@ -43,11 +49,20 @@ for index, row in filtered_store.iterrows():
     main_item = row['주요품목']
     price = row['가격']
     tel = row['업소 전화번호']
-    popup_text = f"{store_name} - {main_item} - {price}원\n{tel}"
+    address = row['주소']
+    popup_text = f"""
+    <div style="font-size: 16px;">
+        📌 가게명: {store_name}<br>
+        🍜 메인메뉴: {main_item}<br>
+        💵 {price}원<br>
+        주소: {address}<br>
+        ☎️{tel}
+    </div>
+    """
     
     folium.Marker(
         [lat, lng], 
-        popup=popup_text, 
+        popup=folium.Popup(popup_text, max_width=300), 
         tooltip="Click for more info", 
         icon=folium.Icon(color='green')
     ).add_to(m)
